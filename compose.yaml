@@ -1,0 +1,14 @@
+services:
+  family-command-center:
+    build: .
+    container_name: family-command-center
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      TZ: America/New_York
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      DATA_DIR: /data
+    volumes:
+      - ./data:/data
