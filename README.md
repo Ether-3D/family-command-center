@@ -82,3 +82,6 @@ Migrates existing tasks and gaming bank to Bentley, adds Dad and Mom as non-gami
 
 ## v0.3.1
 Responsive parent navigation, overview, separate family/chore/gaming/rewards/meals/display/settings pages. Existing single gaming bank and database schema retained. Calendar integration, lists, separate reward banks and full PWA remain pending.
+
+## v0.6.0 preview
+Rewards page includes household tools for dated chores, excused days, completion undo, individual gaming balances, emoji avatars, star rewards, recipes and routines. Only one gaming timer and one calendar feed are supported. Recipes and routines are text records. Legacy rewarded completions cannot be automatically undone; use manual adjustments. Back up before upgrading; migration creates state.json.pre-v060.
