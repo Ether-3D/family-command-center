@@ -1,3 +1,7 @@
+# v0.4.2 — Calendar synchronization fix
+
+Separates the saved TV default from the synchronized admin view. Disabling synchronization restores the TV default.
+
 # v0.4.1 — Dashboard improvements
 
 Profile colors, family filters, TV day/week/month views, optional admin view sync, and household list widgets. TV always displays the current period. Display settings select lists and completed item visibility. Existing data retained.
