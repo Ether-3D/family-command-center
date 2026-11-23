@@ -1,3 +1,7 @@
+# Family Command Center v0.5.1 — Header weather
+
+Header weather is enabled by default when weather data is available. Admin → Display controls header weather independently of the Weather widget. Forecast now requests six days including today; cached older data may show four future days until refreshed.
+
 # Family Command Center v0.5.0 — Integrations
 
 ## Setup
