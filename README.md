@@ -85,3 +85,6 @@ Responsive parent navigation, overview, separate family/chore/gaming/rewards/mea
 
 ## v0.6.0 preview
 Rewards page includes household tools for dated chores, excused days, completion undo, individual gaming balances, emoji avatars, star rewards, recipes and routines. Only one gaming timer and one calendar feed are supported. Recipes and routines are text records. Legacy rewarded completions cannot be automatically undone; use manual adjustments. Back up before upgrading; migration creates state.json.pre-v060.
+
+## v0.6.1
+Dedicated Family, Chores, Gaming, Rewards, Recipes and Routines management cards replace the combined action selector. Reward, recipe and routine records can be edited. Existing data format is unchanged. Recipes and routines remain text records. Multiple calendar feeds remain pending.
