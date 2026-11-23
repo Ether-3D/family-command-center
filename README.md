@@ -1,3 +1,16 @@
+# Family Command Center v0.5.0 — Integrations
+
+## Setup
+- Upload all update files, including Dockerfile and integrations.js. GitHub Actions installs the pinned ical.js dependency during the image build.
+- Admin → Integrations → iCloud: on an Apple device open Calendar, select the calendar information button, enable Public Calendar, and copy its sharing link. Paste the link, select family members, enable and save. Default refresh: five minutes. This is read-only and anyone with the link can access the calendar. If Public Calendar is unavailable for the shared Family calendar, use a separate calendar you own; private CalDAV is not implemented.
+- Admin → Integrations → Weather: enter a town label and approximate town-center latitude/longitude, enable and save. Then enable Weather in Display and save. Open-Meteo provides Fahrenheit current conditions and five-day forecast. Default refresh: 30 minutes.
+- Imported events are shown alongside local events, with a read-only label and selected profile colors. Import window: previous 31 days through next 180 days. Events are displayed on their start date only; multi-day spans are not expanded. A single feed is supported. Failed refreshes retain cached data. Sync now triggers a background refresh.
+- Backup files contain the private sharing URL; store them securely. Public TV state does not include the URL. The TV and its state endpoint are accessible to devices on the LAN; do not expose the service publicly.
+- Automatic pre-v0.5.0 backup: state.json.pre-v050. To roll back, restore that backup with the app stopped (changes after upgrade will be lost).
+
+## Validation limitations
+Syntax and local API tests only. Network access prevented npm installation and live provider tests in the development environment; verify GitHub build and live sync before treating this as stable. No new UI screenshots were captured.
+
 # v0.4.2 — Calendar synchronization fix
 
 Separates the saved TV default from the synchronized admin view. Disabling synchronization restores the TV default.
