@@ -1,3 +1,7 @@
+# Family Command Center v0.5.2 — Google Calendar support
+
+Admin → Integrations → Calendar integration: select Google Calendar, paste the Secret address in iCal format from Google Calendar settings, enable, assign family members, save and Sync now. Keep the calendar private. Existing iCloud links remain supported. One read-only feed at a time; switching feeds replaces cached imported events, not local events. No new dependencies. Live Google sync requires testing on your installation.
+
 # Family Command Center v0.5.1 — Header weather
 
 Header weather is enabled by default when weather data is available. Admin → Display controls header weather independently of the Weather widget. Forecast now requests six days including today; cached older data may show four future days until refreshed.

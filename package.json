@@ -1,6 +1,6 @@
 {
   "name": "family-command-center",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "scripts": {
     "start": "node server.js"
