@@ -1,3 +1,7 @@
+## v0.8.0 — Remote display preview
+
+Remote controls in Admin → Display; automatic 10/2 minute rotation, scheduled or manual modes, and gaming priority. Select media mode and upload files before starting. HTTP LAN only; home-screen shortcut support varies by browser. Separate parent accounts, permissions, push notifications, multiple calendars and dedicated shopping interface remain pending. Blank mode does not power off hardware. Back up the dataset before upgrading.
+
 # Changelog
 
 - 0.7.0 (preview): display customization, media library, photo/video screensaver, widget order and widths, scheduled dark/blank mode; refreshed documentation.
