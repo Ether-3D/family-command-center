@@ -54,3 +54,6 @@ Warm dashboard and parent interface, calendar-first layout, chore progress, stre
 
 ## v0.3.0 family profiles update
 Migrates existing tasks and gaming bank to Bentley, adds Dad and Mom as non-gaming profiles, allows additional non-gaming profiles, task editing, custom days, soft deletion, and challenge editing/disabling. Existing ledger and completion history retained. A pre-migration state.json.pre-v030 backup is created. Gaming remains a single bank for Bentley. Calendar sync, weather, lists, additional reward banks, undo and other roadmap features are not included in this build.
+
+## v0.3.1
+Responsive parent navigation, overview, separate family/chore/gaming/rewards/meals/display/settings pages. Existing single gaming bank and database schema retained. Calendar integration, lists, separate reward banks and full PWA remain pending.
