@@ -51,3 +51,6 @@ A Raspberry Pi / mini PC can run Chromium in kiosk mode at `http://SERVER-IP:300
 
 ## v0.2.0 — Cozy Home
 Warm dashboard and parent interface, calendar-first layout, chore progress, streak celebration, saved family name, three display themes, widget visibility, preset ordering and layout, scheduled visual dimming. Calendar integration remains pending. Existing state is retained; display preferences are optional settings.
+
+## v0.3.0 family profiles update
+Migrates existing tasks and gaming bank to Bentley, adds Dad and Mom as non-gaming profiles, allows additional non-gaming profiles, task editing, custom days, soft deletion, and challenge editing/disabling. Existing ledger and completion history retained. A pre-migration state.json.pre-v030 backup is created. Gaming remains a single bank for Bentley. Calendar sync, weather, lists, additional reward banks, undo and other roadmap features are not included in this build.
