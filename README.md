@@ -1,3 +1,7 @@
+# v0.4.1 — Dashboard improvements
+
+Profile colors, family filters, TV day/week/month views, optional admin view sync, and household list widgets. TV always displays the current period. Display settings select lists and completed item visibility. Existing data retained.
+
 # Family Command Center — v0.4.0
 
 A self-hosted TV family dashboard and phone-based parent administration app. No touchscreen required.
