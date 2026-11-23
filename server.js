@@ -8,13 +8,14 @@ const initial=()=>({version:1,tasks:[{id:'homework',name:'Finish homework',minut
 let db=fs.existsSync(DB)?JSON.parse(fs.readFileSync(DB,'utf8')):initial();
 function save(){const temp=DB+'.tmp';fs.writeFileSync(temp,JSON.stringify(db,null,2));fs.renameSync(temp,DB)}if(!fs.existsSync(DB))save();
 if(!db.people){if(fs.existsSync(DB))fs.copyFileSync(DB,DB+'.pre-v030');db.people=[{id:'bentley',name:'Bentley',color:'#DDECD9',gaming:true},{id:'dad',name:'Dad',color:'#DCE8F6',gaming:false},{id:'mom',name:'Mom',color:'#F5DDE6',gaming:false}];for(const t of db.tasks)t.personId='bentley';save()}
+if(!db.household){fs.copyFileSync(DB,DB+'.pre-v040');db.household={events:[],lists:[],favorites:[],announcement:''};save()}
 const sessions=new Map(),COOKIE='fcc_session';
 const id=()=>crypto.randomUUID(),today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:process.env.TZ||'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 function localDate(d){return new Date(d+'T12:00:00Z')};function monday(date){let d=localDate(date);d.setUTCDate(d.getUTCDate()-((d.getUTCDay()+6)%7));return d.toISOString().slice(0,10)}
 function addDays(date,n){let d=localDate(date);d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
 function balance(){return db.ledger.reduce((sum,x)=>sum+x.delta,0)}
 function syncTimer(){let t=db.timer;if(!t||t.status!=='running')return false;const remaining=Math.max(0,t.remainingMs-(Date.now()-t.startedAt));if(remaining===0){t.status='finished';t.remainingMs=0;t.finishedAt=Date.now();save();return true}return false}
-function publicState(){syncTimer();return {people:db.people,tasks:db.tasks.filter(t=>!t.deleted),completions:db.completions,ledger:db.ledger.slice(-50),balance:balance(),timer:db.timer,meals:db.meals,settings:db.settings,streaks:db.streaks,awards:db.awards,serverNow:Date.now(),today:today()}}
+function publicState(){syncTimer();return {household:db.household,people:db.people,tasks:db.tasks.filter(t=>!t.deleted),completions:db.completions,ledger:db.ledger.slice(-50),balance:balance(),timer:db.timer,meals:db.meals,settings:db.settings,streaks:db.streaks,awards:db.awards,serverNow:Date.now(),today:today()}}
 function auth(req){let token=(req.headers.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith(COOKIE+'='))?.split('=')[1];let s=sessions.get(token);if(!s)return false;if(s.expires<Date.now()){sessions.delete(token);return false}return true}
 function send(res,status,obj,extra={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...extra});res.end(JSON.stringify(obj))}
 function fail(res,status,message){send(res,status,{error:message})}
@@ -27,6 +28,18 @@ if(p==='/api/login'&&method==='POST'){if(typeof b.password!=='string')return fai
 if(p==='/api/logout'&&method==='POST'){let token=(req.headers.cookie||'').match(/fcc_session=([^;]+)/)?.[1];sessions.delete(token);return send(res,200,{ok:true},{'Set-Cookie':`${COOKIE}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0`})}
 if(p==='/api/state'&&method==='GET')return send(res,200,publicState());
 if(!auth(req))return fail(res,401,'Parent login required');
+if(p==='/api/backup'&&method==='GET')return send(res,200,db,{'Content-Disposition':'attachment; filename="family-command-center-backup.json"'});
+if(p==='/api/household'&&method==='POST'){
+ const h=db.household, text=(v,n)=>typeof v==='string'&&v.trim()&&v.length<=n, date=v=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&!isNaN(localDate(v))&&localDate(v).toISOString().slice(0,10)===v;
+ if(b.action==='event'){if(!text(b.title,120)||!date(b.date)||!(b.time===''||/^([01]\d|2[0-3]):[0-5]\d$/.test(b.time))||!Array.isArray(b.people)||!b.people.every(x=>db.people.some(p=>p.id===x)))return fail(res,400,'Invalid event');let e=h.events.find(x=>x.id===b.id);if(b.id&&!e)return fail(res,404,'Event not found');let f={title:b.title.trim(),date:b.date,time:b.time,people:b.people};if(e)Object.assign(e,f);else h.events.push({id:id(),...f});}
+ else if(b.action==='eventDelete'){h.events=h.events.filter(x=>x.id!==b.id)}
+ else if(b.action==='list'){if(!text(b.name,80))return fail(res,400,'List name required');h.lists.push({id:id(),name:b.name.trim(),items:[]})}
+ else if(b.action==='listDelete'){h.lists=h.lists.filter(x=>x.id!==b.id)}
+ else if(['item','itemToggle','itemDelete'].includes(b.action)){let l=h.lists.find(x=>x.id===b.listId);if(!l)return fail(res,404,'List not found');if(b.action==='item'){if(!text(b.text,200))return fail(res,400,'Item required');l.items.push({id:id(),text:b.text.trim(),done:false})}else{let i=l.items.find(x=>x.id===b.id);if(!i)return fail(res,404,'Item not found');if(b.action==='itemToggle')i.done=!i.done;else l.items=l.items.filter(x=>x.id!==b.id)}}
+ else if(b.action==='favorite'){if(!text(b.text,200))return fail(res,400,'Meal required');if(!h.favorites.includes(b.text.trim()))h.favorites.push(b.text.trim())}
+ else if(b.action==='favoriteDelete'){h.favorites=h.favorites.filter(x=>x!==b.text)}
+ else if(b.action==='announcement'){if(typeof b.text!=='string'||b.text.length>300)return fail(res,400,'Announcement too long');h.announcement=b.text.trim()}
+ else return fail(res,400,'Unknown action');save();return send(res,200,publicState())}
 if(p==='/api/me'&&method==='GET')return send(res,200,{authenticated:true});
 if(p==='/api/people'&&method==='POST'){if(typeof b.name!=='string'||!b.name.trim()||b.name.length>60||!/^#[0-9a-f]{6}$/i.test(b.color))return fail(res,400,'Invalid profile');let person=db.people.find(x=>x.id===b.id);if(b.id&&!person)return fail(res,404,'Profile not found');if(person)Object.assign(person,{name:b.name.trim(),color:b.color});else db.people.push({id:id(),name:b.name.trim(),color:b.color,gaming:false});save();return send(res,200,publicState())}
 if(p==='/api/tasks/delete'&&method==='POST'){let t=db.tasks.find(x=>x.id===b.id&&!x.deleted);if(!t)return fail(res,404,'Task not found');t.deleted=true;t.enabled=false;for(const r of db.streaks.filter(r=>r.taskId===t.id))r.enabled=false;save();return send(res,200,publicState())}

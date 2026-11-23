@@ -1,23 +1,19 @@
-# Family Command Center — v0.2.0
+# Family Command Center — v0.4.0
 
 A self-hosted TV family dashboard and phone-based parent administration app. No touchscreen required.
 
-## Included in v0.1
-- Read-only TV dashboard at `/display.html` (also `/`)
-- Parent admin at `/admin` with password authentication
-- Custom recurring chores, completion approvals and gaming-minute ledger
-- Homework Mon–Thu streak: automatically awards 60 minutes when all four are complete
-- Custom weekly streak challenges
-- Gaming bank, start/pause/resume/extend/stop timer, return whole unused minutes on early stop
-- TV audio alarm at timer expiration (15 seconds by default, configurable)
-- Meal planner for breakfast, lunch, dinner and snacks
-- JSON database persisted in `./data` across Docker restarts
+## Features in v0.4.0
+- Cozy Home TV display and responsive parent admin navigation.
+- Family profiles, assigned recurring chores, editable rewards, gaming timer and weekly challenges.
+- Local calendar with day, week and month views, all-day or timed events, family assignments, editing and deletion.
+- Shared grocery and custom lists with item completion and removal.
+- Weekly meal overview, favorite meals and family announcements on the TV.
+- Authenticated JSON backup download; automatic pre-v0.4 migration backup.
 
 ## Not yet included
-- **iCloud Family calendar sync** (requires secure CalDAV credential integration; placeholder only)
-- Multiple separate parent accounts (v0.1 uses one shared admin password)
-- Separate child profiles, edit/delete tasks, custom task day selection, full grocery list
-- Mobile push notifications, remote access setup, automatic console shutdown
+- iCloud/CalDAV sync, weather, individual gaming banks, stars, one-time chores, undo/excused chores, PWA and restore UI.
+- Calendar events are local only; month view is a date-card grid, not a traditional aligned month grid.
+- UI screenshots pending browser access. The display and its state API are readable on the trusted LAN.
 
 ## Install on TrueNAS / Docker
 1. Upload this entire project to a private Git repository (do not upload `.env` or `data/`).
