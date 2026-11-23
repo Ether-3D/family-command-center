@@ -1,4 +1,4 @@
-# Family Command Center — v0.1.0
+# Family Command Center — v0.2.0
 
 A self-hosted TV family dashboard and phone-based parent administration app. No touchscreen required.
 
@@ -48,3 +48,6 @@ A Raspberry Pi / mini PC can run Chromium in kiosk mode at `http://SERVER-IP:300
 - A TV dashboard polls the server every five seconds; the countdown runs locally between polls. The timer remains authoritative on the server.
 - TV alarm sounds only if the dashboard is open and the browser permits audio; no sound is guaranteed if the TV or display device is off.
 - In this first release, a parent can adjust the bank manually with an audit reason; corrections to completed chores are not yet supported.
+
+## v0.2.0 — Cozy Home
+Warm dashboard and parent interface, calendar-first layout, chore progress, streak celebration, saved family name, three display themes, widget visibility, preset ordering and layout, scheduled visual dimming. Calendar integration remains pending. Existing state is retained; display preferences are optional settings.
